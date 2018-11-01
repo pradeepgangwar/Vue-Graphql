@@ -1,23 +1,23 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <router-view/>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <span class="navbar-brand center-align">ToDo Application</span>
+    </nav>
+    <br>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
+
+import AddUser from './components/AddUser'
+import AllTodos from './components/AllTodos'
+
 export default {
-  name: 'App'
+  name: 'app',
+  components: {
+    AddUser,
+    AllTodos
+  }
 }
 </script>
-
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
