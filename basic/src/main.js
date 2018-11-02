@@ -10,6 +10,7 @@ import BootstrapVue from 'bootstrap-vue'
 import VueApollo from 'vue-apollo'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
+import VueMoment from 'vue-moment'
 
 const httpLink = new HttpLink({
   // URL to graphql server, you should use an absolute URL here
@@ -25,6 +26,7 @@ const apolloClient = new ApolloClient({
 // install the vue plugin
 Vue.use(VueApollo)
 Vue.use(BootstrapVue)
+Vue.use(VueMoment)
 
 const apolloProvider = new VueApollo({
   defaultClient: apolloClient

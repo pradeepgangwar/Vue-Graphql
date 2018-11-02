@@ -14,7 +14,29 @@ export const ADD_USER = gql`
     }
   }
 `
-export const ALL_USER_TODOS = gql`
+
+export const ADD_TODO = gql`
+  mutation addUser($desc: String!, $userid: Int!) {
+    insert_todos(
+      objects:[{
+        text: $desc
+        user_id: $userid
+      }]
+    ) {
+      returning {
+        id
+        text
+        is_completed
+        created_at
+        updated_at
+        is_public
+        user_id
+      }
+    }
+  }
+`
+
+export const ALL_PENDING_TODOS = gql`
   query todosQuery($userid: Int!) {
     todos(
       where: { user_id: {_eq: $userid}, is_completed: { _eq: false }}
@@ -30,6 +52,24 @@ export const ALL_USER_TODOS = gql`
     }
   }
 `
+
+export const ALL_COMPLETED_TODOS = gql`
+  query todosQuery($userid: Int!) {
+    todos(
+      where: { user_id: {_eq: $userid}, is_completed: { _eq: true }}
+      order_by: id_desc
+    ) {
+      id
+      text
+      is_completed
+      created_at
+      updated_at
+      is_public
+      user_id
+    }
+  }
+`
+
 export const GET_USER_BY_ID = gql`
   query userQuery($userid: Int!) {
     users(
@@ -37,6 +77,26 @@ export const GET_USER_BY_ID = gql`
     ) {
       id
       name
+    }
+  }
+`
+export const UPDATE_TODO = gql`
+  mutation updateTodo($id: Int! ) {
+    update_todos(
+      where: { id: {_eq: $id}},
+      _set: { is_completed: true }
+    ) {
+      affected_rows
+    }
+  }
+`
+
+export const DELETE_TODO = gql`
+  mutation deleteTodo($id: Int! ) {
+    delete_todos(
+      where: { id: {_eq: $id}},
+    ) {
+      affected_rows
     }
   }
 `

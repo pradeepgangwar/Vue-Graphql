@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import AddUser from '../components/AddUser'
-import AllTodos from '../components/AllTodos'
+import Dashboard from '../components/Dashboard'
 
 Vue.use(Router)
 
@@ -14,8 +14,8 @@ export default new Router({
     },
     {
       path: '/user/:id/todos',
-      name: 'AllTodos',
-      component: AllTodos,
+      name: 'Dashboard',
+      component: Dashboard,
       props: true
     }
   ]

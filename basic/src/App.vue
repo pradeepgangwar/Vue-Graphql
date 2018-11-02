@@ -11,13 +11,13 @@
 <script>
 
 import AddUser from './components/AddUser'
-import AllTodos from './components/AllTodos'
+import PendingTodos from './components/PendingTodos'
 
 export default {
   name: 'app',
   components: {
     AddUser,
-    AllTodos
+    PendingTodos
   }
 }
 </script>
