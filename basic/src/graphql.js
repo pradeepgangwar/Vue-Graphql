@@ -80,8 +80,19 @@ export const GET_USER_BY_ID = gql`
     }
   }
 `
+export const GET_USER_BY_NAME = gql`
+  query userQuery($name: String!) {
+    users(
+      where: { name: {_eq: $name}}
+    ) {
+      id
+      name
+    }
+  }
+`
+
 export const UPDATE_TODO = gql`
-  mutation updateTodo($id: Int! ) {
+  mutation updateTodo($id: Int!) {
     update_todos(
       where: { id: {_eq: $id}},
       _set: { is_completed: true }

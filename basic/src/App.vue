@@ -1,8 +1,6 @@
 <template>
   <div id="app">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <span class="navbar-brand center-align">ToDo Application</span>
-    </nav>
+    <nav-bar></nav-bar>
     <br>
     <router-view></router-view>
   </div>
@@ -12,12 +10,14 @@
 
 import AddUser from './components/AddUser'
 import PendingTodos from './components/PendingTodos'
+import NavBar from './components/NavBar'
 
 export default {
   name: 'app',
   components: {
     AddUser,
-    PendingTodos
+    PendingTodos,
+    NavBar
   }
 }
 </script>
