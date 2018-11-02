@@ -35,7 +35,7 @@
       <table class="table table-hover table-warning table-striped" v-else>
         <thead>
           <tr>
-            <th class="table-dark" colspan="4" style="text-align:center">Horray! No Pending tasks. Grab a cup of coffee and relax!</th>
+            <th class="table-dark" colspan="4" style="text-align:center">Horray! No pending tasks. grab a cup of coffee and enjoy!</th>
           </tr>
         </thead>
       </table>
@@ -82,11 +82,16 @@ export default {
     }
   },
   apollo: {
-    todos: {
-      query: ALL_PENDING_TODOS,
-      variables () {
-        return {
-          userid: this.id
+    $subscribe: {
+      todos: {
+        query: ALL_PENDING_TODOS,
+        variables () {
+          return {
+            userid: this.id
+          }
+        },
+        result (data) {
+          this.todos = data.data.todos
         }
       }
     }

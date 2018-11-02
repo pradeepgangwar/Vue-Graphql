@@ -60,11 +60,16 @@ export default {
     }
   },
   apollo: {
-    todos: {
-      query: ALL_COMPLETED_TODOS,
-      variables () {
-        return {
-          userid: this.id
+    $subscribe: {
+      todos: {
+        query: ALL_COMPLETED_TODOS,
+        variables () {
+          return {
+            userid: this.id
+          }
+        },
+        result (data) {
+          this.todos = data.data.todos
         }
       }
     }

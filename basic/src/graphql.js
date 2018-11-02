@@ -37,7 +37,7 @@ export const ADD_TODO = gql`
 `
 
 export const ALL_PENDING_TODOS = gql`
-  query todosQuery($userid: Int!) {
+  subscription todosQuery($userid: Int!) {
     todos(
       where: { user_id: {_eq: $userid}, is_completed: { _eq: false }}
       order_by: id_desc
@@ -54,7 +54,7 @@ export const ALL_PENDING_TODOS = gql`
 `
 
 export const ALL_COMPLETED_TODOS = gql`
-  query todosQuery($userid: Int!) {
+  subscription todosQuery($userid: Int!) {
     todos(
       where: { user_id: {_eq: $userid}, is_completed: { _eq: true }}
       order_by: id_desc
