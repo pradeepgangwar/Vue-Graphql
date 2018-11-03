@@ -57,11 +57,14 @@ export default {
   },
   methods: {
     updateTodo (id) {
+      var update = new Date()
+      update = update.toISOString()
       this.$apollo
         .mutate({
           mutation: UPDATE_TODO,
           variables: {
-            id: id
+            id: id,
+            updated: update
           }
         })
         .then(response => {

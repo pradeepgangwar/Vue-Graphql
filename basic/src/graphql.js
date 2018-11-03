@@ -92,10 +92,10 @@ export const GET_USER_BY_NAME = gql`
 `
 
 export const UPDATE_TODO = gql`
-  mutation updateTodo($id: Int!) {
+  mutation updateTodo($id: Int!, $updated: timestamptz!) {
     update_todos(
       where: { id: {_eq: $id}},
-      _set: { is_completed: true }
+      _set: { is_completed: true, updated_at: $updated }
     ) {
       affected_rows
     }
