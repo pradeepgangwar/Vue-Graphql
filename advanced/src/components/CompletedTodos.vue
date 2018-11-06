@@ -59,8 +59,13 @@ export default {
     }
   },
   apollo: {
-    todos: {
-      query: ALL_COMPLETED_TODOS
+    $subscribe: {
+      todosQuery: {
+        query: ALL_COMPLETED_TODOS,
+        result (data) {
+          this.todos = data.data.todos
+        }
+      }
     }
   }
 }

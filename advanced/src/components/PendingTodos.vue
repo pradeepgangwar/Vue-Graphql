@@ -84,8 +84,13 @@ export default {
     }
   },
   apollo: {
-    todos: {
-      query: ALL_PENDING_TODOS
+    $subscribe: {
+      todosQuery: {
+        query: ALL_PENDING_TODOS,
+        result (data) {
+          this.todos = data.data.todos
+        }
+      }
     }
   }
 }

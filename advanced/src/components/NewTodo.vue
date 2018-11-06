@@ -1,7 +1,7 @@
 <template>
   <div class="row">
     <div class="col-sm-4 offset-sm-4 text-center">
-      <b-form @submit="addtodo">
+      <b-form @submit="onSubmit">
 
         <b-form-group id="todo"
                       label="Add New Todo:"
@@ -33,14 +33,14 @@ export default {
     }
   },
   methods: {
-    addtodo () {
-      const sub = localStorage.getItem('sub')
+    onSubmit (evt) {
+      evt.preventDefault()
       this.$apollo
         .mutate({
           mutation: ADD_TODO,
           variables: {
             desc: this.todoinput,
-            userid: sub
+            userid: localStorage.getItem('sub')
           }
         })
         .then(response => {
