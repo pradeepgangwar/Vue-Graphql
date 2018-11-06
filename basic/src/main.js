@@ -17,12 +17,12 @@ import { getMainDefinition } from 'apollo-utilities'
 
 const httpLink = new HttpLink({
   // URL to graphql server, you should use an absolute URL here
-  uri: 'http://localhost:8080/v1alpha1/graphql'
+  uri: process.env.GRAPHQL_ENDPOINT
 })
 
 // Create the subscription websocket link
 const wsLink = new WebSocketLink({
-  uri: 'ws://localhost:8080/v1alpha1/graphql',
+  uri: process.env.GRAPHQL_WS_ENDPOINT,
   options: {
     reconnect: true
   }
