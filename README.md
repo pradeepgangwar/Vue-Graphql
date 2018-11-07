@@ -1,6 +1,6 @@
 # Vue-Hasura-Boilerplate
 
-This repository contains the boilerplates for setting up Vue application using Hasura. It uses Hasura Graphql Engine for its backend support. It contains three boilerplates whoch can be used depending on need of application.
+This repository contains the boilerplates for setting up Vue application using Hasura. It uses [Hasura Graphql Engine](https://github.com/hasura/graphql-engine) for its backend support. It contains three boilerplates which can be used depending on need of application.
 
 * Hello-World:
 
