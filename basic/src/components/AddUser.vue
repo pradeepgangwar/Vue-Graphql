@@ -15,7 +15,7 @@
           </b-form-input>
         </b-form-group>
 
-        <b-button v-bind:href="'#/user/' + userid + '/todos'" variant="primary" v-if="userExists">Login</b-button>
+        <b-button v-bind:href="'user/' + userid + '/todos'" variant="primary" v-if="userExists">Login</b-button>
         <b-button type="submit" variant="primary" v-else>Signup</b-button>
         <br>
         <span class="text-center" v-if="userExists"> This usrname exists! Login instead. </span>
