@@ -93,7 +93,7 @@ You are ready to use the application with Hasura using this basic setup.
 
   This file contains all the necessary imports and apollo client initializations.
 
-- **App.ue**
+- **App.vue**
 
   This file is the entry point of the vue application. You can import other comonents and use them here.
 
