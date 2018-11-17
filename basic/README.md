@@ -9,6 +9,17 @@ This repository contains the boilerplate for the basic application. This shows h
 
 * Vue version 2.5.2
 * Node version >= 6.0.0
+* Hasura Engine v1.0.0-alpha20
+
+## Setting up
+
+- **Hasura**: You can setup hasura locally using docker and specify the version given above in requirements to run queries as given in this repo. As some of the query & mutation methods have changed in new releases. We will update this repo with the new verison of engine as soon as possible. To run Hasura Engine locally using docker see [this](https://docs.hasura.io/1.0/graphql/manual/deployment/docker/index.html).
+
+- **Node**: To setup node on your machine you can visit their official [docs](https://nodejs.org/en/download/).
+
+## Setting Environment variables
+
+To setup GRAPHQL_ENDPOINT and GRAPHQL_WS_ENDPOINT env variable used in main.js. Go to **config/dev.env.js** (if you are working in development environment) and **config/prod.env.js** (if you are working in production environment) and place your environment variables there.
 
 ## Build Setup
 
@@ -24,6 +35,28 @@ npm run build
 
 # build for production and view the bundle analyzer report
 npm run build --report
+```
+## Database Structure
+
+Make sure to add the following tables to your postgres database that you plan to use with hasura and also track those tables with Hasura once you have Hasura engine setup. To see more about setting up tables and tracking them with hasura engine visit this [doc](https://docs.hasura.io/1.0/graphql/manual/getting-started/first-graphql-query.html).
+
+#### Tables:
+
+```
+todos:
+id - (integer auto-increment) primary key  
+text  - (text)
+is_completed  - (bool)
+created_at  - (timestamp) default - now()
+updated_at  - (timestamp) nullable
+is_public  - (bool) default - false
+user_id - foreign key to users table
+
+users:
+id - (integer auto-increment) primary key
+name - text
+created_at - timestamp default - now
+last_seen - timestamp 
 ```
 
 ## Setting up apollo-client.
