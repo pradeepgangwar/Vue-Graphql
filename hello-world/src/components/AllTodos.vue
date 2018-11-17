@@ -40,7 +40,11 @@ export default {
     }
   },
   apollo: {
-    // fetch all todos
+    /**
+      fetch all todos. (This is an example to fetch. This will work only if
+      you have respective table and graphql client setup). Visit basic boilerplate
+      for more info https://github.com/pradeepgangwar/Vue-Graphql/tree/master/basic
+    */
     todos: {
       query: TODOS_QUERY
     }
