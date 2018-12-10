@@ -1,7 +1,7 @@
 <template>
   <div class="row">
     <div class="col-sm-4 offset-sm-4 text-center">
-      <b-form @submit="adduser" @keyup="checkuser">
+      <b-form @submit.prevent="adduser" @keyup="checkuser">
 
         <b-form-group id="username"
                       label="Your Username:"
@@ -49,6 +49,8 @@ export default {
           if (response.data.users.length !== 0) {
             this.userExists = true
             this.userid = response.data.users[0].id
+          } else {
+            this.userExists = false
           }
         })
     },

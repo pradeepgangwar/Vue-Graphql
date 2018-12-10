@@ -1,7 +1,7 @@
 <template>
   <div class="row">
     <div class="col-sm-4 offset-sm-4 text-center">
-      <b-form @submit="addtodo">
+      <b-form @submit.prevent="addtodo">
 
         <b-form-group id="todo"
                       label="Add New Todo:"
