@@ -49,8 +49,8 @@ text  - (text)
 is_completed  - (bool)
 created_at  - (timestamp) default - now()
 updated_at  - (timestamp) nullable
-is_public  - (bool) default - false
-user_id - foreign key to users table
+is_public  - (bool) default - true
+user_id - text
 
 users:
 id - (integer auto-increment) primary key

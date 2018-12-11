@@ -1,7 +1,7 @@
 <template>
   <div class="row">
     <div class="col-sm-10 offset-sm-1">
-      <table class="table table-hover table-warning table-striped">
+      <table class="table table-hover table-warning table-striped" v-if="todos.length > 0">
         <thead>
           <tr>
             <th class="table-dark" colspan="4" style="text-align:center">PENDING TODOS</th>
@@ -32,13 +32,13 @@
           </tr>
         </tbody>
       </table>
-      <!-- <table class="table table-hover table-warning table-striped" v-else>
+      <table class="table table-hover table-warning table-striped" v-else>
         <thead>
           <tr>
             <th class="table-dark" colspan="4" style="text-align:center">Horray! No pending tasks. grab a cup of coffee and enjoy!</th>
           </tr>
         </thead>
-      </table> -->
+      </table>
     </div>
   </div>
 </template>
@@ -84,12 +84,10 @@ export default {
     }
   },
   apollo: {
-    $subscribe: {
-      todosQuery: {
-        query: ALL_PENDING_TODOS,
-        result (data) {
-          this.todos = data.data.todos
-        }
+    todosQuery: {
+      query: ALL_PENDING_TODOS,
+      result (data) {
+        this.todos = data.data.todos
       }
     }
   }

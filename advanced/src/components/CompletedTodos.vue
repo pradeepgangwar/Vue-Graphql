@@ -1,7 +1,7 @@
 <template>
   <div class="row">
     <div class="col-sm-10 offset-sm-1">
-      <table class="table table-hover table-success">
+      <table class="table table-hover table-success" v-if="todos.length > 0">
         <thead>
           <tr>
             <th class="table-dark" colspan="4" style="text-align:center">COMPLETED TODOS</th>
@@ -59,12 +59,10 @@ export default {
     }
   },
   apollo: {
-    $subscribe: {
-      todosQuery: {
-        query: ALL_COMPLETED_TODOS,
-        result (data) {
-          this.todos = data.data.todos
-        }
+    todosQuery: {
+      query: ALL_COMPLETED_TODOS,
+      result (data) {
+        this.todos = data.data.todos
       }
     }
   }

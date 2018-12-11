@@ -1,7 +1,7 @@
 import gql from 'graphql-tag'
 
 export const ADD_TODO = gql`
-  mutation addTodo($desc: String!, $userid: Int!) {
+  mutation addTodo($desc: String!, $userid: String!) {
     insert_todos(
       objects:[{
         text: $desc
@@ -22,7 +22,7 @@ export const ADD_TODO = gql`
 `
 
 export const ALL_PENDING_TODOS = gql`
-  subscription todosQuery {
+  query todosQuery {
     todos(
       where: { is_completed: { _eq: false }}
       order_by: id_desc
@@ -39,7 +39,7 @@ export const ALL_PENDING_TODOS = gql`
 `
 
 export const ALL_COMPLETED_TODOS = gql`
-  subscription todosQuery {
+  query todosQuery {
     todos(
       where: { is_completed: { _eq: true }}
       order_by: id_desc
