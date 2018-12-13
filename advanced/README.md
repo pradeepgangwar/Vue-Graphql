@@ -17,7 +17,11 @@ This repository contains the boilerplate for the advanced application. This show
 
 - **Node**: To setup node on your machine you can visit their official [docs](https://nodejs.org/en/download/).
 
-- **auth0**: Setup the 
+- **auth0**: Setup the auth0 following this tutorial [here](https://auth0.com/docs/quickstart/spa/vuejs). Once you setup the auth0 then execute the following commands in root directory of this advanced folder.
+
+  `cp Auth/auth0-variables.example.js Auth0/auth0-variables.js`
+  
+  This should make a new file named auth0-variables.js in Auth folder. Paste your auth0 variables in this file.
 
 ## Setting Environment variables
 
@@ -53,12 +57,6 @@ created_at  - (timestamp) default - now()
 updated_at  - (timestamp) nullable
 is_public  - (bool) default - true
 user_id - text
-
-users:
-id - (integer auto-increment) primary key
-name - text
-created_at - timestamp default - now
-last_seen - timestamp 
 ```
 
 ## Setting up apollo-client.
@@ -75,21 +73,39 @@ import { InMemoryCache } from 'apollo-cache-inmemory'
 import VueApollo from 'vue-apollo'
 ```
 
+* Setup the headers and pass them to the necessary endpoints.
+```
+const authLink = setContext((_, { headers }) => {
+  const token = localStorage.getItem('access_token')
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? `Bearer ${token}` : ''
+    }
+  }
+})
+```
+
 * Sets up the connection to graphql endpoint by fetching the absolute URL of the graphql endpoint from the environment varibales.
 ```
 const httpLink = new HttpLink({
-    uri: process.env.GRAPHQL_ENDPOINT
+  uri: process.env.GRAPHQL_ENDPOINT,
+  fetch,
+  headers: getHeaders(token)
 })
 ```
 
 * Sets up the websocket connection. This is required to setup the graphql subscriptions.
 ```
-const wsLink = new WebSocketLink({
-  uri: process.env.GRAPHQL_WS_ENDPOINT,
-  options: {
-    reconnect: true
-  }
-})
+const wsLink = new WebSocketLink(
+  new SubscriptionClient(process.env.GRAPHQL_WS_ENDPOINT, {
+    reconnect: true,
+    timeout: 30000,
+    connectionParams: {
+      headers: getHeaders(token)
+    }
+  })
+)
 ```
 
 * Using the ability to split links, you can send data to each link depending on what kind of operation is being sent.
@@ -98,8 +114,7 @@ const link = split(
   // split based on operation type
   ({ query }) => {
     const { kind, operation } = getMainDefinition(query)
-    return kind === 'OperationDefinition' &&
-      operation === 'subscription'
+    return kind === 'OperationDefinition' && operation === 'subscription'
   },
   wsLink,
   httpLink
@@ -107,10 +122,11 @@ const link = split(
 ```
 * Initiate the vue apollo client and use vue-apollo plugin.
 ```
-const apolloClient = new ApolloClient({
-  link,
-  cache: new InMemoryCache(),
-  connectToDevTools: true
+const client = new ApolloClient({
+  link: authLink.concat(link),
+  cache: new InMemoryCache({
+    addTypename: true
+  })
 })
 
 Vue.use(VueApollo)
@@ -136,11 +152,21 @@ You are ready to use the application with Hasura using this basic setup.
 
   This folder contains various components of vue application.
 
+- **Auth/..**
+
+  This folder contains all the necessary files for the auth0 service.
+
 ## Additional notes:
 
 * For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
 * If you are behind proxy setup consider reading [this](https://www.jhipster.tech/configuring-a-corporate-proxy/) to setup your proxy support.
 * To read more about Hasura Graphql Engine refer to their [docs](https://docs.hasura.io/) and the graphlql-engine [repo](https://github.com/hasura/graphql-engine).
+
+## Application Screenshots:
+
+![adv_1](../assets/adv_1.png)
+
+![adv_2](../assets/adv_2.png)
 
 ##### Powered By:
 
