@@ -1,8 +1,8 @@
-# Vue-Hasura-Graphql Basic
+# Vue-Hasura-Graphql Advanced
 
-This repository contains the boilerplate for the basic application. This shows how to setup Vue application that uses [Hasura Graphql Engine](https://github.com/hasura/graphql-engine). This application is a to-do application which supports following features:
+This repository contains the boilerplate for the advanced application. This shows how to setup Vue application that uses [Hasura Graphql Engine](https://github.com/hasura/graphql-engine). This application is a to-do application which supports following features:
 
-* Basic Login/Signup (No Third party application involved)
+* Basic Login/Signup with auth0
 * Todo creation/deletion and marking a task as done.
 
 ## Requirements
@@ -16,6 +16,8 @@ This repository contains the boilerplate for the basic application. This shows h
 - **Hasura**: You can setup hasura locally using docker and specify the version given above in requirements to run queries as given in this repo. As some of the query & mutation methods have changed in new releases. We will update this repo with the new verison of engine as soon as possible. To run Hasura Engine locally using docker see [this](https://docs.hasura.io/1.0/graphql/manual/deployment/docker/index.html).
 
 - **Node**: To setup node on your machine you can visit their official [docs](https://nodejs.org/en/download/).
+
+- **auth0**: Setup the 
 
 ## Setting Environment variables
 
