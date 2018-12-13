@@ -11,33 +11,48 @@ import VueApollo from 'vue-apollo'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import VueMoment from 'vue-moment'
-import { ApolloLink, concat, split } from 'apollo-link'
+import { split } from 'apollo-link'
 import { WebSocketLink } from 'apollo-link-ws'
 import { getMainDefinition } from 'apollo-utilities'
+import { SubscriptionClient } from 'subscriptions-transport-ws'
+import { setContext } from 'apollo-link-context'
 
-const httpLink = new HttpLink({
-  // URL to graphql server, you should use an absolute URL here
-  uri: process.env.GRAPHQL_ENDPOINT
+const getHeaders = () => {
+  const token = localStorage.getItem('access_token')
+  const headers = {
+    authorization: token ? `Bearer ${token}` : ''
+  }
+  return headers
+}
+
+const authLink = setContext((_, { headers }) => {
+  const token = localStorage.getItem('access_token')
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? `Bearer ${token}` : ''
+    }
+  }
 })
 
-const token = localStorage.getItem('access_token') || null
-const authMiddleware = new ApolloLink((operation, forward) => {
-  // add the authorization to the headers
-  operation.setContext({
-    headers: {
-      authorization: `Bearer ${token}`
-    }
-  })
-  return forward(operation)
+const token = localStorage.getItem('access_token')
+// Create an http link:
+const httpLink = new HttpLink({
+  uri: process.env.GRAPHQL_ENDPOINT,
+  fetch,
+  headers: getHeaders(token)
 })
 
 // Create the subscription websocket link
-let wsLink = new WebSocketLink({
-  uri: process.env.GRAPHQL_WS_ENDPOINT,
-  options: {
-    reconnect: true
-  }
-})
+const wsLink = new WebSocketLink(
+  new SubscriptionClient(process.env.GRAPHQL_WS_ENDPOINT, {
+    reconnect: true,
+    timeout: 30000,
+    connectionParams: {
+      headers: getHeaders(token)
+    }
+  })
+)
 
 // using the ability to split links, you can send data to each link
 // depending on what kind of operation is being sent
@@ -52,10 +67,11 @@ const link = split(
 )
 
 // Create the apollo client
-const apolloClient = new ApolloClient({
-  link: concat(authMiddleware, link),
-  cache: new InMemoryCache(),
-  connectToDevTools: true
+const client = new ApolloClient({
+  link: authLink.concat(link),
+  cache: new InMemoryCache({
+    addTypename: true
+  })
 })
 
 // install the vue plugin
@@ -64,7 +80,7 @@ Vue.use(BootstrapVue)
 Vue.use(VueMoment)
 
 const apolloProvider = new VueApollo({
-  defaultClient: apolloClient,
+  defaultClient: client,
   defaultOptions: {
     $loadingKey: 'loading'
   },
